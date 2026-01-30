@@ -1,5 +1,6 @@
-import http from "http";
 import dotenv from "dotenv";
+import http from "http";
+
 import app from "./app.js";
 
 dotenv.config({ path: ".env.local" });
