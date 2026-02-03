@@ -1,16 +1,12 @@
-import dotenv from "dotenv";
 import http from "http";
 
 import app from "./app.js";
-
-dotenv.config({ path: ".env.local" });
-
-const PORT = process.env.PORT || 3000;
+import { env } from "./lib/validation/env.schema.js";
 
 const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+server.listen(env.PORT, () => {
+  console.log(`Server running on http://localhost:${env.PORT}`);
 });
 
 const shutdown = (signal: string) => {
