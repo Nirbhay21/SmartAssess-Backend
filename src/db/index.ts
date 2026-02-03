@@ -1,11 +1,11 @@
-import dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-dotenv.config({ path: ".env.local" });
+import { env } from "../lib/validation/env.schema.ts";
 
-const client = postgres(process.env.DATABASE_URL as string, {
+const client = postgres(env.DATABASE_APP_USER_URL, {
   prepare: false,
+  ssl: "require",
 });
 
-export const db = drizzle({ client });
+export const db = drizzle(client);
