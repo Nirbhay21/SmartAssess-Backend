@@ -15,6 +15,7 @@ export const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1),
   GITHUB_CLIENT_ID: z.string().min(1),
   GITHUB_CLIENT_SECRET: z.string().min(1),
+  ENCRYPTION_KEY: z.string().min(32, "Encryption key must be at least 32 characters"),
   CURRENT_TERMS_VERSION: z.string().default("1.0.0"),
 });
 

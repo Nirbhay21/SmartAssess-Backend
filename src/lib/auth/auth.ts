@@ -2,9 +2,8 @@ import { betterAuth, BetterAuthError } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getOAuthState } from "better-auth/api";
 
-import { db } from "@/db/index.js";
-import { accountTable, sessionTable, userTable, verificationTable } from "@/db/schema/index.js";
-
+import { db } from "../../db/index.js";
+import { accountTable, sessionTable, userTable, verificationTable } from "../../db/schema/index.js";
 import { EmailSignupSchema } from "../validation/email-signup.schema.ts";
 import { env } from "../validation/env.schema.ts";
 import { OauthSignupSchema } from "../validation/oauth-state.schema.ts";

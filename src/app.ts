@@ -8,6 +8,10 @@ import { db } from "./db/index.ts";
 import { userTable } from "./db/schema/auth/auth.schema.ts";
 import { auth } from "./lib/auth/auth.ts";
 import { env } from "./lib/validation/env.schema.ts";
+import { errorHandler } from "./middlewares/error-handler.middleware.ts";
+import authRouter from "./routes/auth.routes.ts";
+import healthRouter from "./routes/health.routes.ts";
+import onboardingRouter from "./routes/onboarding.routes.ts";
 
 const app = express();
 
@@ -31,5 +35,11 @@ app.get("/", async (_req, res) => {
   const result = await db.select().from(userTable);
   res.send({ message: "SmartAssess Server is running", users: result });
 });
+
+app.use("/api", healthRouter);
+app.use("/api", authRouter);
+app.use("/api", onboardingRouter);
+
+app.use(errorHandler);
 
 export default app;

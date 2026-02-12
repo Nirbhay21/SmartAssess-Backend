@@ -1,0 +1,11 @@
+ALTER TABLE "user_onboarding" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint
+CREATE POLICY "Users can see their own onboarding" ON "user_onboarding" AS PERMISSIVE FOR SELECT TO "app_user" USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+CREATE POLICY "Users can insert their own onboarding" ON "user_onboarding" AS PERMISSIVE FOR INSERT TO "app_user" WITH CHECK ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+CREATE POLICY "Users can update their own onboarding" ON "user_onboarding" AS PERMISSIVE FOR UPDATE TO "app_user" USING ((user_id = current_setting('app.current_user_id', true))) WITH CHECK ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+CREATE POLICY "Users can delete their own onboarding" ON "user_onboarding" AS PERMISSIVE FOR DELETE TO "app_user" USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can update their own accounts" ON "auth"."account" TO app_user USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can delete their own accounts" ON "auth"."account" TO app_user USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can delete their own sessions" ON "auth"."session" TO app_user USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can update their own sessions" ON "auth"."session" TO app_user USING ((user_id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can delete their own profile" ON "auth"."user" TO app_user USING ((id = current_setting('app.current_user_id', true)));--> statement-breakpoint
+ALTER POLICY "Users can update their own profile" ON "auth"."user" TO app_user USING ((id = current_setting('app.current_user_id', true))) WITH CHECK ((id = current_setting('app.current_user_id', true)));
