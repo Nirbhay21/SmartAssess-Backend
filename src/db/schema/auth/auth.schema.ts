@@ -1,6 +1,10 @@
 import { relations, sql } from "drizzle-orm";
 import { boolean, index, pgPolicy, pgSchema, text, timestamp } from "drizzle-orm/pg-core";
 
+import { candidateProfileTable } from "../app/candidate-profile.schema.ts";
+import { userOnboardingTable } from "../app/onboarding.schema.ts";
+import { recruiterProfileTable } from "../app/recruiter-profile.schema.ts";
+
 export const authSchema = pgSchema("auth");
 
 export const userRoleEnum = authSchema.enum("user_role", ["candidate", "recruiter", "admin"]);
@@ -41,13 +45,13 @@ export const userTable = authSchema.table(
     pgPolicy("Users can delete their own profile", {
       for: "delete",
       to: "app_user",
-      using: sql`(id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(id = current_setting('app.current_user_id', true))`,
     }),
     pgPolicy("Users can update their own profile", {
       for: "update",
       to: "app_user",
-      using: sql`(id = current_setting('app.current_user_id'::text, true))`,
-      withCheck: sql`(id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(id = current_setting('app.current_user_id', true))`,
+      withCheck: sql`(id = current_setting('app.current_user_id', true))`,
     }),
   ]
 );
@@ -82,12 +86,12 @@ export const sessionTable = authSchema.table(
     pgPolicy("Users can delete their own sessions", {
       for: "delete",
       to: "app_user",
-      using: sql`(user_id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(user_id = current_setting('app.current_user_id', true))`,
     }),
     pgPolicy("Users can update their own sessions", {
       for: "update",
       to: "app_user",
-      using: sql`(user_id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(user_id = current_setting('app.current_user_id', true))`,
     }),
     pgPolicy("System can create sessions during signup", {
       for: "insert",
@@ -129,7 +133,7 @@ export const accountTable = authSchema.table(
     pgPolicy("Users can update their own accounts", {
       for: "update",
       to: "app_user",
-      using: sql`(user_id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(user_id = current_setting('app.current_user_id', true))`,
     }),
     pgPolicy("System can insert all accounts", {
       for: "insert",
@@ -144,7 +148,7 @@ export const accountTable = authSchema.table(
     pgPolicy("Users can delete their own accounts", {
       for: "delete",
       to: "app_user",
-      using: sql`(user_id = current_setting('app.current_user_id'::text, true))`,
+      using: sql`(user_id = current_setting('app.current_user_id', true))`,
     }),
   ]
 );
@@ -175,9 +179,13 @@ export const verificationTable = authSchema.table(
   ]
 );
 
-export const userRelations = relations(userTable, ({ many }) => ({
+export const userRelations = relations(userTable, ({ one, many }) => ({
   sessions: many(sessionTable),
   accounts: many(accountTable),
+
+  onboarding: one(userOnboardingTable),
+  candidateProfile: one(candidateProfileTable),
+  recruiterProfile: one(recruiterProfileTable),
 }));
 
 export const sessionRelations = relations(sessionTable, ({ one }) => ({

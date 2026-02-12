@@ -1,6 +1,5 @@
 import js from "@eslint/js";
 import { defineConfig } from "eslint/config";
-import importPlugin from "eslint-plugin-import";
 import n from "eslint-plugin-n";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import globals from "globals";
@@ -13,7 +12,6 @@ export default defineConfig([
       js,
       n,
       "simple-import-sort": simpleImportSort,
-      import: importPlugin,
     },
     extends: [js.configs.recommended, n.configs["flat/recommended"]],
     languageOptions: {
@@ -24,17 +22,12 @@ export default defineConfig([
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
     },
-    settings: {
-      "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-        },
-      },
-    },
   },
   {
     rules: {
       "n/no-unpublished-import": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "import/order": "off",
     },
   },
   tseslint.configs.recommended,

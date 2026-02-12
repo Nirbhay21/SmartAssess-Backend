@@ -22,6 +22,27 @@
       "when": 1770105372720,
       "tag": "0002_moaning_dreaming_celestial",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1770718310759,
+      "tag": "0003_perpetual_shadowcat",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1770719453645,
+      "tag": "0004_ambitious_redwing",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1770876034376,
+      "tag": "0005_cheerful_magdalene",
+      "breakpoints": true
     }
   ]
 }
