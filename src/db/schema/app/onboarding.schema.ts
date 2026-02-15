@@ -10,7 +10,8 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-import type { CandidateOnboardingDraftData } from "../../../lib/validation/candidate-onboarding.schema.ts";
+import type { CandidateOnboardingDraftData } from "../../../modules/onboarding/candidate-onboarding.schema.ts";
+import type { RecruiterOnboardingDraftData } from "../../../modules/onboarding/recruiter-onboarding.schema.ts";
 import { userTable } from "../auth/auth.schema.ts";
 
 export const userOnboardingTable = pgTable(
@@ -23,7 +24,9 @@ export const userOnboardingTable = pgTable(
 
     isCompleted: boolean("is_completed").default(false).notNull(),
     currentStep: integer("current_step").default(1).notNull(),
-    draft: jsonb("draft").$type<CandidateOnboardingDraftData | null>(),
+    draft: jsonb("draft").$type<
+      CandidateOnboardingDraftData | RecruiterOnboardingDraftData | null
+    >(),
 
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true })

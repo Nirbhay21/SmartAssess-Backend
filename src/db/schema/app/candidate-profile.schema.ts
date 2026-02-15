@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import { integer, pgPolicy, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { userTable } from "../auth/auth.schema.ts";
-import { candidateProfileTagTable } from "./candidate_profile_tag.schema.ts";
+import { candidateProfileTagTable } from "./candidate-profile-tag.schema.ts";
 
 export const candidateProfileTable = pgTable(
   "candidate_profile",

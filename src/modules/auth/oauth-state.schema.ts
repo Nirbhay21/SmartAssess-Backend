@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { USER_ROLES } from "../constants/user-role.ts";
+import { USER_ROLES } from "../../shared/constants/user-role.ts";
 
 /*
  *  OAuth state passed via Better Auth `additionalData`

@@ -1,6 +1,6 @@
 import "express";
 
-import type { AuthSession } from "./auth.types.ts";
+import type { AuthSession } from "../modules/auth/auth.types.ts";
 
 declare module "express" {
   interface Request {

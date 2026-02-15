@@ -1,7 +1,7 @@
 import { fromNodeHeaders } from "better-auth/node";
 import type { NextFunction, Request, Response } from "express";
 
-import { auth } from "../lib/auth/auth.js";
+import { auth } from "../auth/auth.ts";
 
 export const requireAuth = async (
   req: Request,

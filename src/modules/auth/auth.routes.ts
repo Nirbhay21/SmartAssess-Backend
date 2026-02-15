@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { getMe } from "../controllers/auth.controller.ts";
-import { requireAuth } from "../middlewares/auth.middleware.ts";
+import { requireAuth } from "../../shared/middlewares/auth.middleware.ts";
+import { getMe } from "./auth.controller.ts";
 
 const authRouter = Router();
 

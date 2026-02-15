@@ -1,8 +1,8 @@
-import { relations, sql } from "drizzle-orm";
-import { index, integer, pgPolicy, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { candidateProfileTagTable } from "./candidate_profile_tag.schema.ts";
-import { recruiterProfileTagTable } from "./recruiter_profile_tag.schema.ts";
+import { candidateProfileTagTable } from "./candidate-profile-tag.schema.ts";
+import { recruiterProfileTagTable } from "./recruiter-profile-tag.schema.ts";
 
 export const tagTable = pgTable(
   "tag",
@@ -18,24 +18,7 @@ export const tagTable = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [
-    index("tag_name_idx").on(table.name),
-    index("tag_type_idx").on(table.type),
-
-    // RLS: allow any authenticated `app_user` to read tags, but only admins may create/update/delete
-    pgPolicy("App users can select tags", {
-      for: "select",
-      to: "app_user",
-      using: sql`true`,
-    }),
-
-    pgPolicy("Admins can manage tags", {
-      for: "all",
-      to: "app_user",
-      using: sql`EXISTS (SELECT 1 FROM auth."user" u WHERE u.id = current_setting('app.current_user_id', true) AND u.role = 'admin')`,
-      withCheck: sql`EXISTS (SELECT 1 FROM auth."user" u WHERE u.id = current_setting('app.current_user_id', true) AND u.role = 'admin')`,
-    }),
-  ]
+  (table) => [index("tag_name_idx").on(table.name), index("tag_type_idx").on(table.type)]
 );
 
 export const tagRelations = relations(tagTable, ({ many }) => ({

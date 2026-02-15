@@ -2,11 +2,11 @@ import { betterAuth, BetterAuthError } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getOAuthState } from "better-auth/api";
 
+import { env } from "../../config/env.schema.ts";
 import { db } from "../../db/index.js";
 import { accountTable, sessionTable, userTable, verificationTable } from "../../db/schema/index.js";
-import { EmailSignupSchema } from "../validation/email-signup.schema.ts";
-import { env } from "../validation/env.schema.ts";
-import { OauthSignupSchema } from "../validation/oauth-state.schema.ts";
+import { EmailSignupSchema } from "../../modules/auth/email-signup.schema.ts";
+import { OauthSignupSchema } from "../../modules/auth/oauth-state.schema.ts";
 import { validateAndApplyUserMetadata } from "./applySignupMetadata.ts";
 
 export const auth = betterAuth({
