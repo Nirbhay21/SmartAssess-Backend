@@ -1,7 +1,7 @@
 import { BetterAuthError } from "better-auth";
 import { z } from "zod";
 
-import { env } from "../validation/env.schema.ts";
+import { env } from "../../config/env.schema.ts";
 
 type SignupMetadata = {
   role: string;

@@ -1,6 +1,6 @@
 import type { Request } from "express";
 
-import type { AuthSession } from "../types/auth.types.ts";
+import type { AuthSession } from "../modules/auth/auth.types.ts";
 
 export class UnauthorizedError extends Error {
   readonly statusCode = 401;

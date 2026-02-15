@@ -4,14 +4,14 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 
+import { env } from "./config/env.schema.ts";
 import { db } from "./db/index.ts";
 import { userTable } from "./db/schema/auth/auth.schema.ts";
-import { auth } from "./lib/auth/auth.ts";
-import { env } from "./lib/validation/env.schema.ts";
-import { errorHandler } from "./middlewares/error-handler.middleware.ts";
-import authRouter from "./routes/auth.routes.ts";
-import healthRouter from "./routes/health.routes.ts";
-import onboardingRouter from "./routes/onboarding.routes.ts";
+import authRouter from "./modules/auth/auth.routes.ts";
+import healthRouter from "./modules/health/health.routes.ts";
+import onboardingRouter from "./modules/onboarding/onboarding.routes.ts";
+import { auth } from "./shared/auth/auth.ts";
+import { errorHandler } from "./shared/middlewares/error-handler.middleware.ts";
 
 const app = express();
 

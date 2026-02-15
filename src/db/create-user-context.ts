@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 
 import { db } from "./index.js";
 
-type TransactionType = Parameters<Parameters<typeof db.transaction>[0]>[0];
+export type TransactionType = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 export const createUserContext = (userId: string) => {
   return {

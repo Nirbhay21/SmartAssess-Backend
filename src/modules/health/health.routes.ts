@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { env } from "../lib/validation/env.schema.js";
+import { env } from "../../config/env.schema.ts";
 
 const healthRouter = Router();
 

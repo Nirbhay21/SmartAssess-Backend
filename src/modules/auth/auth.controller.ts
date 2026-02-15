@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 
-import { getAuth } from "../utils/get-auth.ts";
+import { getAuth } from "../../utils/get-auth.ts";
 
 export const getMe = (req: Request, res: Response) => {
   const { user } = getAuth(req);
