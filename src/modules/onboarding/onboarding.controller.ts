@@ -1,15 +1,10 @@
 import { type NextFunction, type Request, type Response } from "express";
 
-import { USER_ROLES, type UserRole } from "../../shared/constants/user-role.ts";
+import { env } from "../../config/env.schema.ts";
+import { parseUserRole } from "../../shared/constants/user-role.ts";
 import { getAuth } from "../../utils/get-auth.ts";
+import { createMetaCookie } from "../../utils/meta-cookie.ts";
 import { OnboardingService } from "./onboarding.service.ts";
-
-const parseUserRole = (role: string): UserRole => {
-  if (USER_ROLES.includes(role as UserRole)) {
-    return role as UserRole;
-  }
-  throw new Error("Invalid user role");
-};
 
 export const getOnboardingStatus = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,6 +13,17 @@ export const getOnboardingStatus = async (req: Request, res: Response, next: Nex
 
     const service = new OnboardingService(user.id, userRole);
     const result = await service.getStatus();
+
+    // update signed meta cookie so frontend has latest role + onboarding flag
+    const oc = result.status === "completed";
+    const meta = createMetaCookie({ r: userRole, oc });
+    res.cookie("app_meta", meta, {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      path: "/",
+    });
 
     return res.json(result);
   } catch (error) {
@@ -48,7 +54,22 @@ export const completeOnboarding = async (req: Request, res: Response, next: Next
 
     const service = new OnboardingService(user.id, userRole);
     await service.initializeIfNotExists();
-    const result = await service.completeOnboarding(req.body.draft, req.body.currentStep);
+
+    const result = await service.completeOnboarding(
+      req.body.onboardingData,
+      req.body.currentStep,
+      req.body.onboardingType
+    );
+
+    // set updated meta cookie (frontend can read onboarding complete immediately)
+    const meta = createMetaCookie({ r: userRole, oc: result.isCompleted === true });
+    res.cookie("app_meta", meta, {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      path: "/",
+    });
 
     return res.json(result);
   } catch (error) {

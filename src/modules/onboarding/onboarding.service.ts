@@ -304,9 +304,11 @@ export class OnboardingService {
     });
   }
 
-  async updateStatus(
-    body: Omit<OnboardingStatusUpdateData, "onboardingType">
-  ): Promise<OnboardingUpdateResponse> {
+  async updateStatus(body: OnboardingStatusUpdateData): Promise<OnboardingUpdateResponse> {
+    if (body.onboardingType !== this.role) {
+      throw new ApplicationError("Onboarding type does not match user role");
+    }
+
     const parsed = onboardingStatusUpdateSchema.parse({
       ...body,
       onboardingType: this.role,
@@ -333,17 +335,26 @@ export class OnboardingService {
   }
 
   async completeOnboarding(
-    draft: unknown,
-    currentStep: number
+    onboardingData: unknown,
+    currentStep: number,
+    onboardingType: UserRole = this.role
   ): Promise<OnboardingCompleteResponse> {
+    if (currentStep < 1 || currentStep > 3) {
+      throw new ApplicationError("Invalid current step");
+    }
+
+    if (onboardingType !== this.role) {
+      throw new ApplicationError("Onboarding type does not match user role");
+    }
+
     switch (this.role) {
       case "candidate": {
-        const parsedDraft = candidateOnboardingSchema.parse(draft);
+        const parsedDraft = candidateOnboardingSchema.parse(onboardingData);
         await this.completeCandidateOnboarding(parsedDraft, currentStep);
         break;
       }
       case "recruiter": {
-        const parsedDraft = recruiterOnboardingSchema.parse(draft);
+        const parsedDraft = recruiterOnboardingSchema.parse(onboardingData);
         await this.completeRecruiterOnboarding(parsedDraft, currentStep);
         break;
       }
