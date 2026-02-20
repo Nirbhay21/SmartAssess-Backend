@@ -11,7 +11,6 @@ export const onboardingStatusUpdateSchema = z.discriminatedUnion("onboardingType
       .int()
       .min(1, "Current step must be at least 1")
       .max(3, "Current step cannot be greater than 3"),
-    // PATCH must not mark onboarding completed — completion goes through POST /onboarding/complete
     isCompleted: z.literal(false),
     draft: candidateOnboardingDraftSchema,
   }),
@@ -22,7 +21,6 @@ export const onboardingStatusUpdateSchema = z.discriminatedUnion("onboardingType
       .int()
       .min(1, "Current step must be at least 1")
       .max(3, "Current step cannot be greater than 3"),
-    // PATCH must not mark onboarding completed — completion goes through POST /onboarding/complete
     isCompleted: z.literal(false),
     draft: recruiterOnboardingDraftSchema,
   }),
