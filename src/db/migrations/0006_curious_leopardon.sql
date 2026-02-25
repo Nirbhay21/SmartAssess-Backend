@@ -1,0 +1,1 @@
+ALTER TABLE "recruiter_profile" RENAME COLUMN "company_website" TO "organization_website";

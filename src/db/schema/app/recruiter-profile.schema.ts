@@ -15,9 +15,9 @@ export const recruiterProfileTable = pgTable(
     organizationName: text("organization_name").notNull(),
     organizationSize: text("organization_size").notNull(),
     industry: text("industry").notNull(),
-    country: text("country").notNull(),
+    countryCode: text("country_code").notNull(),
 
-    companyWebsite: text("company_website"),
+    organizationWebsite: text("organization_website"),
 
     // LLM setup fields
     llmProvider: text("llm_provider").notNull(),

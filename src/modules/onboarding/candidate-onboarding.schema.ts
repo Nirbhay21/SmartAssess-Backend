@@ -18,7 +18,7 @@ export const candidateOnboardingSchema = z.object({
   professionalBio: z.string().min(20, "Professional bio must be at least 20 characters"),
 
   // step 3 - location & presence
-  country: z.string().min(1, "Country is required"),
+  countryCode: z.string().min(1, "Country code is required"),
   portfolioUrl: z.url("Invalid portfolio URL").optional().or(z.literal("")),
   githubUrl: z.url("Invalid GitHub URL").optional().or(z.literal("")),
   linkedinUrl: z.url("Invalid LinkedIn profile URL").optional().or(z.literal("")),
