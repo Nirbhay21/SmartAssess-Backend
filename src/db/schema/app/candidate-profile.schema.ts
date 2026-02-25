@@ -22,7 +22,7 @@ export const candidateProfileTable = pgTable(
     yearsOfExperienceMax: integer("years_of_experience_max"),
     professionalBio: text("professional_bio").notNull(),
 
-    country: text("country").notNull(),
+    countryCode: text("country_code").notNull(),
     portfolioUrl: text("portfolio_url"),
     githubUrl: text("github_url"),
     linkedinUrl: text("linkedin_url"),

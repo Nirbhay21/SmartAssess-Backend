@@ -10,6 +10,8 @@ import { userTable } from "./db/schema/auth/auth.schema.ts";
 import authRouter from "./modules/auth/auth.routes.ts";
 import healthRouter from "./modules/health/health.routes.ts";
 import onboardingRouter from "./modules/onboarding/onboarding.routes.ts";
+import recruiterOrganizationRouter from "./modules/recruiter/organization/recruiter-organization.routes.ts";
+import recruiterProfileRouter from "./modules/recruiter/profile/recruiter-profile.routes.ts";
 import { auth } from "./shared/auth/auth.ts";
 import { errorHandler } from "./shared/middlewares/error-handler.middleware.ts";
 
@@ -39,6 +41,8 @@ app.get("/", async (_req, res) => {
 app.use("/api", healthRouter);
 app.use("/api", authRouter);
 app.use("/api", onboardingRouter);
+app.use("/api", recruiterProfileRouter);
+app.use("/api", recruiterOrganizationRouter);
 
 app.use(errorHandler);
 
